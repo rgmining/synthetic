@@ -1,0 +1,20 @@
+synthetic package
+=================
+
+.. automodule:: synthetic
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+synthetic.loader module
+-----------------------
+
+.. automodule:: synthetic.loader
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
