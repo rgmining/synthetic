@@ -7,6 +7,17 @@
 
 This package provides a method to load a synthetic review dataset.
 
+The synthetic review dataset has been introduced in the following paper:
+
+* Kazuki Tawaramoto, [Junpei Kawamoto](https://www.jkawamoto.info),
+  [Yasuhito Asano](http://www.iedu.i.kyoto-u.ac.jp/intro/member/asano), and
+  [Masatoshi Yoshikawa](http://www.db.soc.i.kyoto-u.ac.jp/~yoshikawa/),
+  "[A Bipartite Graph Model and Mutually Reinforcing Analysis for Review
+  Sites](http://www.anrdoezrs.net/links/8186671/type/dlg/http://link.springer.com/chapter/10.1007%2F978-3-642-23088-2_25),"
+  Proc. of [the 22nd International Conference on Database and Expert Systems
+  Applications](http://www.dexa.org/previous/dexa2011/index.html) (DEXA 2011),
+  pp.341-348, Toulouse, France, August 31, 2011.
+
 
 ## Installation
 Use `pip` to install this package.

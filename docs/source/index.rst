@@ -6,6 +6,10 @@ A Synthetic Review Dataset
 
 This package provides a method to load a synthetic review dataset.
 
+The synthetic review dataset has been introduced in the paper [#DEXA11]_
+published in the 22nd International Conference on Database and Expert Systems
+Applications.
+
 
 Installation
 --------------
@@ -48,3 +52,21 @@ License
 ---------
 This software is released under The GNU General Public License Version 3,
 see COPYING for more detail.
+
+
+References
+------------
+
+.. [#DEXA11] Kazuki Tawaramoto, `Junpei Kawamoto`_, `Yasuhito Asano`_, and
+    `Masatoshi Yoshikawa`_, "|springer| `A Bipartite Graph Model and Mutually Reinforcing
+    Analysis for Review Sites
+    <http://www.anrdoezrs.net/links/8186671/type/dlg/http://link.springer.com/chapter/10.1007%2F978-3-642-23088-2_25>`_,"
+    Proc. of `the 22nd International Conference on Database and Expert Systems
+    Applications <http://www.dexa.org/previous/dexa2011/index.html>`_ (DEXA 2011),
+    pp.341-348, Toulouse, France, August 31, 2011.
+
+.. _Junpei Kawamoto: https://www.jkawamoto.info
+.. _Yasuhito Asano: http://www.iedu.i.kyoto-u.ac.jp/intro/member/asano
+.. _Masatoshi Yoshikawa: http://www.db.soc.i.kyoto-u.ac.jp/~yoshikawa/
+
+.. |springer| image:: img/springer.png
