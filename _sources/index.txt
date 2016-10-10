@@ -1,3 +1,5 @@
+.. _top:
+
 A Synthetic Review Dataset
 ===================================
 .. raw:: html
