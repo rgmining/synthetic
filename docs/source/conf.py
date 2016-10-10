@@ -127,6 +127,11 @@ todo_include_todos = False
 # To add GitHub link.
 rst_prolog = """
 :github_url: https://github.com/rgmining/synthetic
+:base_url: https://rgmining.github.io/synthetic/
+:description: This package provides a method to load a synthetic review dataset.
+    The synthetic review dataset has been introduced in the paper
+    published in the 22nd International Conference on Database and Expert Systems
+    Applications.
 """
 
 # -- Options for HTML output ----------------------------------------------
@@ -225,7 +230,7 @@ html_static_path = ['_static']
 # contain a <link> tag referring to it.  The value of this option must be the
 # base URL from which the finished HTML is served.
 #
-# html_use_opensearch = ''
+html_use_opensearch = 'https://docs.python.org'
 
 # This is the file name suffix for HTML files (e.g. ".xhtml").
 # html_file_suffix = None
