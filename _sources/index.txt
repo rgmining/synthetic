@@ -1,3 +1,8 @@
+:description: This package provides a method to load a synthetic review dataset.
+    The synthetic review dataset has been introduced in the paper
+    published in the 22nd International Conference on Database and Expert Systems
+    Applications.
+
 .. _top:
 
 A Synthetic Review Dataset
