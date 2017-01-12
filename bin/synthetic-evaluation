@@ -166,7 +166,10 @@ def threshold(method, loop, output, param):
     The output is a list of JSON object which has a threshold value,
     the precision and recall values for the threshold.
 
-    Some algorithm requires a set of parameters.
+    Some algorithm requires a set of parameters. For example, feagle requires
+    parameter `epsilon`. Argument `param` specifies those parameters, and
+    if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
+    argument.
 
     Args:
       method: name of algorithm.
@@ -212,6 +215,11 @@ def ranking(method, loop, output, param):  # pylint: disable=too-many-locals
     error and error-rate are the number of normal reviwers in the top 57
     anomalous reviewers and its rate, respectively.
 
+    Some algorithm requires a set of parameters. For example, feagle requires
+    parameter `epsilon`. Argument `param` specifies those parameters, and
+    if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
+    argument.
+
     Args:
       method: name of algorithm.
       loop: the number of iteration.
@@ -254,6 +262,11 @@ def dcg(method, loop, output, param):
 
     Runs a given algorithm and outputs Discounted Cumulative Gain (DCG) score
     for each k in 1 to 57.
+
+    Some algorithm requires a set of parameters. For example, feagle requires
+    parameter `epsilon`. Argument `param` specifies those parameters, and
+    if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
+    argument.
 
     Args:
       method: name of algorithm.
