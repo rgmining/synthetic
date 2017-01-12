@@ -38,7 +38,7 @@ def _load_requires_from_file(filepath):
 
 setup(
     name='rgmining-synthetic-dataset',
-    version='0.9.0',
+    version='0.9.1',
     author="Junpei Kawamoto",
     author_email="kawamoto.junpei@gmail.com",
     description="A synthetic dataset for Review graph mining project",
