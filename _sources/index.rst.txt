@@ -11,7 +11,8 @@ A Synthetic Review Dataset
 
    <div class="addthis_inline_share_toolbox"></div>
 
-This package provides a method to load a synthetic review dataset.
+This package provides a method to load a synthetic review dataset,
+and a script to evaluate mining algorithms with the dataset.
 
 The synthetic review dataset has been introduced in the paper [#DEXA11]_
 published in the 22nd International Conference on Database and Expert Systems
@@ -48,11 +49,12 @@ API Reference
   modules/*
 
 
-Indices and tables
---------------------
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+Scripts
+--------
+.. toctree::
+  :maxdepth: 1
+
+  scripts
 
 
 License
