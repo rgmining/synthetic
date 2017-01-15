@@ -163,8 +163,8 @@ def threshold(method, loop, output, param, plot=None):
 
     Runs a given algorithm and classifies reviewers whose anomalous degree is
     grator than or equal to a threshold as anomalous.
-    Moving the threshold from 0.0 to 1.0, evaluates the precision and recall of
-    reviewers classfied in anomalous reviewers.
+    Moving the threshold from 0.0 to 1.0, evaluates true positive score,
+    true negative score, false positive score, and false negative score.
 
     The output is a list of JSON object which has a threshold value,
     true positive score, true negative score, false positive score,
@@ -174,6 +174,9 @@ def threshold(method, loop, output, param, plot=None):
     parameter `epsilon`. Argument `param` specifies those parameters, and
     if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
     argument.
+
+    If a file name is given via `plot`, a ROC curve will be plotted and
+    stored in the file.
 
     Args:
       method: name of algorithm.
@@ -245,6 +248,9 @@ def ranking(
     parameter `epsilon`. Argument `param` specifies those parameters, and
     if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
     argument.
+
+    If a file name is given via `--plot` flag, a ROC curve will be plotted and
+    stored in the file.
 
     Args:
       method: name of algorithm.
@@ -319,6 +325,9 @@ def dcg(method, loop, output, param, plot=None):
     if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
     argument.
 
+    If a file name is given via `--plot` flag, a nDCG curve will be plotted and
+    stored in the file.
+
     Args:
       method: name of algorithm.
       loop: the number of iteration (default: 20).
@@ -375,7 +384,7 @@ def main():
         help=(
             "key and value pair which are connected with '='.\n"
             "This option can be set multiply."))
-    threshold_cmd.add_argument("--plot")
+    threshold_cmd.add_argument("--plot", metavar="FILE")
 
     ranking_cmd = subparsers.add_parser(ranking)
     ranking_cmd.add_argument("method", choices=TYPE)
@@ -385,7 +394,7 @@ def main():
         help=(
             "key and value pair which are connected with '='.\n"
             "This option can be set multiply."))
-    ranking_cmd.add_argument("--plot")
+    ranking_cmd.add_argument("--plot", metavar="FILE")
 
     dcg_cmd = subparsers.add_parser(dcg)
     dcg_cmd.add_argument("method", choices=TYPE)
@@ -395,7 +404,7 @@ def main():
         help=(
             "key and value pair which are connected with '='.\n"
             "This option can be set multiply."))
-    dcg_cmd.add_argument("--plot")
+    dcg_cmd.add_argument("--plot", metavar="FILE")
 
     parser.parse_and_run()
 
