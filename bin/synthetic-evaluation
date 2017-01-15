@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #
-# evaluation.py
+# synthetic-evaluation
 #
 # Copyright (c) 2016-2017 Junpei Kawamoto
 #
@@ -24,12 +24,14 @@
 # pylint: disable=invalid-name
 from __future__ import absolute_import
 import json
+import logging
+from logging import getLogger
 import math
 from os import path
 import sys
-import logging
-from logging import getLogger
+
 import dsargparse
+from matplotlib import pyplot
 
 sys.path.append(path.join(path.dirname(__file__), "../"))
 import synthetic  # pylint: disable=import-error,wrong-import-position
@@ -85,7 +87,7 @@ try:
 except ImportError:
     LOGGER.info("rgmining-fraudar is not installed.")
 else:
-    def create_fraudar_graph(nblock):
+    def create_fraudar_graph(nblock=1):
         """Create a review graph defined in Fraud Eagle package.
         """
         return fraudar.ReviewGraph(int(nblock))
@@ -173,7 +175,7 @@ def threshold(method, loop, output, param):
 
     Args:
       method: name of algorithm.
-      loop: the number of iteration.
+      loop: the number of iteration (default: 20).
       output: writable object where the output will be written.
       param: list of key and value pair which are connected with "=".
     """
@@ -222,7 +224,7 @@ def ranking(method, loop, output, param):  # pylint: disable=too-many-locals
 
     Args:
       method: name of algorithm.
-      loop: the number of iteration.
+      loop: the number of iteration (default: 20).
       output: writable object where the output will be written.
       param: list of key and value pair which are connected with "=".
     """
@@ -257,7 +259,7 @@ def ranking(method, loop, output, param):  # pylint: disable=too-many-locals
         output.write("\n")
 
 
-def dcg(method, loop, output, param):
+def dcg(method, loop, output, param, plot=None):
     """Evaluate an anomalous degree ranking by DCG.
 
     Runs a given algorithm and outputs Discounted Cumulative Gain (DCG) score
@@ -270,9 +272,10 @@ def dcg(method, loop, output, param):
 
     Args:
       method: name of algorithm.
-      loop: the number of iteration.
+      loop: the number of iteration (default: 20).
       output: writable object where the output will be written.
       param: list of key and value pair which are connected with "=".
+      plot: file name of the result graph. If set, plot a nDCG curve.
     """
     kwargs = {key: float(value)
               for key, value in [v.split("=") for v in param]}
@@ -282,9 +285,23 @@ def dcg(method, loop, output, param):
     for _ in xrange(loop if method != "one" else 1):
         g.update()
 
+    X, Y = [], []
     for k in range(1, synthetic.ANOMALOUS_REVIEWER_SIZE + 1):
-        json.dump({"k": k, "score": DCG(g.reviewers, k) / IDCG(k)}, output)
+        score = DCG(g.reviewers, k) / IDCG(k)
+        json.dump({"k": k, "score": score}, output)
         output.write("\n")
+
+        X.append(k)
+        Y.append(score)
+
+    if plot:
+        pyplot.plot(X, Y)
+        pyplot.xlabel("k")
+        pyplot.ylabel("nDCG")
+        pyplot.xlim(1, synthetic.ANOMALOUS_REVIEWER_SIZE)
+        pyplot.ylim(0, 1.1)
+        pyplot.tight_layout()
+        pyplot.savefig(plot)
 
 
 def main():
@@ -303,7 +320,7 @@ def main():
 
     threshold_cmd = subparsers.add_parser(threshold)
     threshold_cmd.add_argument("method", choices=TYPE)
-    threshold_cmd.add_argument("--loop", type=int, default=100)
+    threshold_cmd.add_argument("--loop", type=int, default=20)
     threshold_cmd.add_argument(
         "--param", action="append", default=[],
         help=(
@@ -312,7 +329,7 @@ def main():
 
     ranking_cmd = subparsers.add_parser(ranking)
     ranking_cmd.add_argument("method", choices=TYPE)
-    ranking_cmd.add_argument("--loop", type=int, default=100)
+    ranking_cmd.add_argument("--loop", type=int, default=20)
     ranking_cmd.add_argument(
         "--param", action="append", default=[],
         help=(
@@ -321,12 +338,13 @@ def main():
 
     dcg_cmd = subparsers.add_parser(dcg)
     dcg_cmd.add_argument("method", choices=TYPE)
-    dcg_cmd.add_argument("--loop", type=int, default=100)
+    dcg_cmd.add_argument("--loop", type=int, default=20)
     dcg_cmd.add_argument(
         "--param", action="append", default=[],
         help=(
             "key and value pair which are connected with '='.\n"
             "This option can be set multiply."))
+    dcg_cmd.add_argument("--plot")
 
     parser.parse_and_run()
 
