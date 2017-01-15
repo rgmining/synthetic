@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #
-# evaluation.py
+# synthetic-evaluation
 #
 # Copyright (c) 2016-2017 Junpei Kawamoto
 #
@@ -22,14 +22,17 @@
 """Evaluate a review graph mining algorithm with the synthetic dataset.
 """
 # pylint: disable=invalid-name
-from __future__ import absolute_import
+from __future__ import absolute_import, division
 import json
+import logging
+from logging import getLogger
 import math
 from os import path
 import sys
-import logging
-from logging import getLogger
+
 import dsargparse
+from matplotlib import pyplot
+import numpy as np
 
 sys.path.append(path.join(path.dirname(__file__), "../"))
 import synthetic  # pylint: disable=import-error,wrong-import-position
@@ -85,7 +88,7 @@ try:
 except ImportError:
     LOGGER.info("rgmining-fraudar is not installed.")
 else:
-    def create_fraudar_graph(nblock):
+    def create_fraudar_graph(nblock=1):
         """Create a review graph defined in Fraud Eagle package.
         """
         return fraudar.ReviewGraph(int(nblock))
@@ -155,52 +158,78 @@ def calc_anomalous_reviews(reviewers):
     return (type1, type2, type3)
 
 
-def threshold(method, loop, output, param):
+def threshold(method, loop, output, param, plot=None):
     """Threshold based classification.
 
     Runs a given algorithm and classifies reviewers whose anomalous degree is
     grator than or equal to a threshold as anomalous.
-    Moving the threshold from 0.0 to 1.0, evaluates the precision and recall of
-    reviewers classfied in anomalous reviewers.
+    Moving the threshold from 0.0 to 1.0, evaluates true positive score,
+    true negative score, false positive score, and false negative score.
 
     The output is a list of JSON object which has a threshold value,
-    the precision and recall values for the threshold.
+    true positive score, true negative score, false positive score,
+    and false negative score.
 
     Some algorithm requires a set of parameters. For example, feagle requires
     parameter `epsilon`. Argument `param` specifies those parameters, and
     if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
     argument.
 
+    If a file name is given via `plot`, a ROC curve will be plotted and
+    stored in the file.
+
     Args:
       method: name of algorithm.
-      loop: the number of iteration.
+      loop: the number of iteration (default: 20).
       output: writable object where the output will be written.
       param: list of key and value pair which are connected with "=".
+      plot: file name of the result graph. If set, plot an ROC curve.
     """
     kwargs = {key: float(value)
               for key, value in [v.split("=") for v in param]}
     g = ALGORITHMS[method](**kwargs)
     synthetic.load(g)
 
-    num_of_anomalous = sum(calc_anomalous_reviews(g.reviewers))
-
     # If method is ONE, the graph is updated only one time.
     for _ in xrange(loop if method != "one" else 1):
         g.update()
 
-    for th in [v / 100. for v in range(0, 101)]:
+    X, Y = [], []
+    normal_reviewer_size = len(g.reviewers) - synthetic.ANOMALOUS_REVIEWER_SIZE
+    for th in np.linspace(0, 1, 100):
         a = [r for r in g.reviewers if r.anomalous_score >= th]
-        found = sum(calc_anomalous_reviews(a))
+
+        tp = sum(calc_anomalous_reviews(a))
+        fp = len(a) - tp
+        fn = synthetic.ANOMALOUS_REVIEWER_SIZE - tp
+        tn = normal_reviewer_size - fp
 
         json.dump({
             "threshold": th,
-            "precision": found / len(a) if a else 0,
-            "recall": found / num_of_anomalous if num_of_anomalous else 0
+            "true-positive": tp,
+            "true-negative": tn,
+            "false-positive": fp,
+            "false-negative": fn
         }, output)
         output.write("\n")
 
+        X.append(fp / normal_reviewer_size)
+        Y.append(tp / synthetic.ANOMALOUS_REVIEWER_SIZE)
 
-def ranking(method, loop, output, param):  # pylint: disable=too-many-locals
+    if plot:
+        pyplot.plot(X, Y)
+        pyplot.xlabel("False positive rate")
+        pyplot.ylabel("True positive rate")
+        pyplot.xlim(0, 1)
+        pyplot.ylim(0, 1)
+        pyplot.title("AUC: {0}".format(-round(np.trapz(Y, X), 5)))
+        pyplot.tight_layout()
+        pyplot.savefig(plot)
+
+
+def ranking(
+        method, loop, output,
+        param, plot=None):  # pylint: disable=too-many-locals
     """Ranking based classification.
 
     Runs a given algorithm and classifies reviewers who have top 57 highest
@@ -220,11 +249,15 @@ def ranking(method, loop, output, param):  # pylint: disable=too-many-locals
     if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
     argument.
 
+    If a file name is given via `--plot` flag, a ROC curve will be plotted and
+    stored in the file.
+
     Args:
       method: name of algorithm.
-      loop: the number of iteration.
+      loop: the number of iteration (default: 20).
       output: writable object where the output will be written.
       param: list of key and value pair which are connected with "=".
+      plot: file name of the result graph. If set, plot a graph.
     """
     kwargs = {key: float(value)
               for key, value in [v.split("=") for v in param]}
@@ -235,6 +268,7 @@ def ranking(method, loop, output, param):  # pylint: disable=too-many-locals
     num_of_type1, num_of_type2, num_of_type3 = calc_anomalous_reviews(
         g.reviewers)
 
+    A1, A2, A3, E = [],[],[], []
     for i in xrange(loop if method != "one" else 1):
         g.update()
 
@@ -243,21 +277,44 @@ def ranking(method, loop, output, param):  # pylint: disable=too-many-locals
         type1, type2, type3 = calc_anomalous_reviews(a)
         error = len(a) - (type1 + type2 + type3)
 
+        a1 = type1 / num_of_type1
+        a2 = type2 / num_of_type2
+        a3 = type3 / num_of_type3
+        e = error / num_of_reviewers
+
         json.dump({
             "a1": int(type1),
-            "a1-precision": type1 / num_of_type1,
+            "a1-precision": a1,
             "a2": int(type2),
-            "a2-precision": type2 / num_of_type2,
+            "a2-precision": a2,
             "a3": int(type3),
-            "a3-precision": type3 / num_of_type3,
+            "a3-precision": a3,
             "error": int(error),
-            "error-rate": error / num_of_reviewers,
+            "error-rate": e,
             "loop": i
         }, output)
         output.write("\n")
 
+        A1.append(a1)
+        A2.append(a2)
+        A3.append(a3)
+        E.append(e)
 
-def dcg(method, loop, output, param):
+    if plot:
+        X = np.arange(len(A1))
+        pyplot.plot(X, A1, label="a1")
+        pyplot.plot(X, A2, label="a2")
+        pyplot.plot(X, A3, label="a3")
+        pyplot.plot(X, E, label="error")
+        pyplot.xlim(1, len(A1))
+        pyplot.ylim(0)
+        pyplot.xlabel("iteration")
+        pyplot.legend()
+        pyplot.tight_layout()
+        pyplot.savefig(plot)
+
+
+def dcg(method, loop, output, param, plot=None):
     """Evaluate an anomalous degree ranking by DCG.
 
     Runs a given algorithm and outputs Discounted Cumulative Gain (DCG) score
@@ -268,11 +325,15 @@ def dcg(method, loop, output, param):
     if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
     argument.
 
+    If a file name is given via `--plot` flag, a nDCG curve will be plotted and
+    stored in the file.
+
     Args:
       method: name of algorithm.
-      loop: the number of iteration.
+      loop: the number of iteration (default: 20).
       output: writable object where the output will be written.
       param: list of key and value pair which are connected with "=".
+      plot: file name of the result graph. If set, plot a nDCG curve.
     """
     kwargs = {key: float(value)
               for key, value in [v.split("=") for v in param]}
@@ -282,9 +343,23 @@ def dcg(method, loop, output, param):
     for _ in xrange(loop if method != "one" else 1):
         g.update()
 
+    X, Y = [], []
     for k in range(1, synthetic.ANOMALOUS_REVIEWER_SIZE + 1):
-        json.dump({"k": k, "score": DCG(g.reviewers, k) / IDCG(k)}, output)
+        score = DCG(g.reviewers, k) / IDCG(k)
+        json.dump({"k": k, "score": score}, output)
         output.write("\n")
+
+        X.append(k)
+        Y.append(score)
+
+    if plot:
+        pyplot.plot(X, Y)
+        pyplot.xlabel("k")
+        pyplot.ylabel("nDCG")
+        pyplot.xlim(1, synthetic.ANOMALOUS_REVIEWER_SIZE)
+        pyplot.ylim(0, 1.1)
+        pyplot.tight_layout()
+        pyplot.savefig(plot)
 
 
 def main():
@@ -303,30 +378,33 @@ def main():
 
     threshold_cmd = subparsers.add_parser(threshold)
     threshold_cmd.add_argument("method", choices=TYPE)
-    threshold_cmd.add_argument("--loop", type=int, default=100)
+    threshold_cmd.add_argument("--loop", type=int, default=20)
     threshold_cmd.add_argument(
         "--param", action="append", default=[],
         help=(
             "key and value pair which are connected with '='.\n"
             "This option can be set multiply."))
+    threshold_cmd.add_argument("--plot", metavar="FILE")
 
     ranking_cmd = subparsers.add_parser(ranking)
     ranking_cmd.add_argument("method", choices=TYPE)
-    ranking_cmd.add_argument("--loop", type=int, default=100)
+    ranking_cmd.add_argument("--loop", type=int, default=20)
     ranking_cmd.add_argument(
         "--param", action="append", default=[],
         help=(
             "key and value pair which are connected with '='.\n"
             "This option can be set multiply."))
+    ranking_cmd.add_argument("--plot", metavar="FILE")
 
     dcg_cmd = subparsers.add_parser(dcg)
     dcg_cmd.add_argument("method", choices=TYPE)
-    dcg_cmd.add_argument("--loop", type=int, default=100)
+    dcg_cmd.add_argument("--loop", type=int, default=20)
     dcg_cmd.add_argument(
         "--param", action="append", default=[],
         help=(
             "key and value pair which are connected with '='.\n"
             "This option can be set multiply."))
+    dcg_cmd.add_argument("--plot", metavar="FILE")
 
     parser.parse_and_run()
 

@@ -19,8 +19,13 @@ algorithms.
 
 It runs a given algorithm and classifies reviewers whose anomalous degree is
 grator than or equal to a threshold as anomalous.
-Moving the threshold from 0.0 to 1.0, evaluates the precision and recall of
-reviewers classfied in anomalous reviewers.
+
+Moving the threshold from 0.0 to 1.0, evaluates true positive score,
+true negative score, false positive score, and false negative score.
+
+The output is a list of JSON object which has a threshold value,
+true positive score, true negative score, false positive score,
+and false negative score.
 
 The output is a list of JSON object which has a threshold value,
 the precision and recall values for the threshold.
@@ -30,6 +35,9 @@ parameter `epsilon`. Argument `param` specifies those parameters, and
 if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
 argument.
 
+If a file name is given via `--plot` flag, a ROC curve will be plotted and
+stored in the file.
+
 The formal usage of this sub command is
 
 .. code-block:: none
@@ -38,14 +46,14 @@ The formal usage of this sub command is
                                         <algorithm>
 
   positional arguments:
-    <algorithm>           name of algorithm.
+    <algorithm>    name of algorithm.
 
   optional arguments:
-    -h, --help            show this help message and exit
-    --loop LOOP           the number of iteration.
-    --param PARAM         key and value pair which are connected with '='.
-                          This option can be set multiply.
-
+    -h, --help     show this help message and exit
+    --loop LOOP    the number of iteration (default:20).
+    --param PARAM  key and value pair which are connected with '='.
+                   This option can be set multiply.
+    --plot FILE    file name of the result graph. If set, plot an ROC curve.
 
 ranking
 --------
@@ -69,6 +77,9 @@ parameter `epsilon`. Argument `param` specifies those parameters, and
 if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
 argument.
 
+If a file name is given via `--plot` flag, a graph will be plotted and
+stored in the file.
+
 The formal usage of this sub command is
 
 .. code-block:: none
@@ -77,14 +88,14 @@ The formal usage of this sub command is
                                       <algorithm>
 
   positional arguments:
-    <algorithm>           name of algorithm.
+    <algorithm>    name of algorithm.
 
   optional arguments:
-    -h, --help            show this help message and exit
-    --loop LOOP           the number of iteration.
-    --param PARAM         key and value pair which are connected with '='.
-                          This option can be set multiply.
-
+    -h, --help     show this help message and exit
+    --loop LOOP    the number of iteration (default:20).
+    --param PARAM  key and value pair which are connected with '='.
+                   This option can be set multiply.
+    --plot FILE    file name of the result graph. If set, plot a graph.
 
 dcg
 ----
@@ -92,6 +103,14 @@ dcg
 algorithm.
 
 It runs a given algorithm and outputs DCG score for each :math:`k` in 1 to 57.
+
+Some algorithm requires a set of parameters. For example, feagle requires
+parameter `epsilon`. Argument `param` specifies those parameters, and
+if you want to set 0.1 to the `epsilon`, pass `epsilon=0.1` via the
+argument.
+
+If a file name is given via `--plot` flag, a nDCG curve will be plotted and
+stored in the file.
 
 The formal usage of this sub command is
 
@@ -101,10 +120,11 @@ The formal usage of this sub command is
                                       <algorithm>
 
   positional arguments:
-    <algorithm>           name of algorithm.
+    <algorithm>    name of algorithm.
 
   optional arguments:
-    -h, --help            show this help message and exit
-    --loop LOOP           the number of iteration.
-    --param PARAM         key and value pair which are connected with '='.
-                          This option can be set multiply.
+    -h, --help     show this help message and exit
+    --loop LOOP    the number of iteration (default:20).
+    --param PARAM  key and value pair which are connected with '='.
+                   This option can be set multiply.
+    --plot FILE    file name of the result graph. If set, plot a nDCG curve.
