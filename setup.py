@@ -1,7 +1,7 @@
 #
 # setup.py
 #
-# Copyright (c) 2016 Junpei Kawamoto
+# Copyright (c) 2016-2017 Junpei Kawamoto
 #
 # This file is part of rgmining-synthetic-dataset.
 #
@@ -38,7 +38,7 @@ def _load_requires_from_file(filepath):
 
 setup(
     name='rgmining-synthetic-dataset',
-    version='0.9.1',
+    version='0.9.2',
     author="Junpei Kawamoto",
     author_email="kawamoto.junpei@gmail.com",
     description="A synthetic dataset for Review graph mining project",
