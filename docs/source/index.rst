@@ -32,6 +32,8 @@ Usage
 -------
 This package provides `load` method which takes a graph object and adds
 reviewers, products and reviews to the graph.
+To use this dataset, the graph must implement
+the :ref:`graph interface <dataset-io:graph-interface>`.
 
 .. code-block:: python
 
