@@ -38,7 +38,7 @@ def _load_requires_from_file(filepath):
 
 setup(
     name='rgmining-synthetic-dataset',
-    version='0.9.2-1',
+    use_scm_version=True,
     author="Junpei Kawamoto",
     author_email="kawamoto.junpei@gmail.com",
     description="A synthetic dataset for Review graph mining project",
@@ -53,6 +53,9 @@ setup(
             "synthetic-evaluation = synthetic_evaluation:main",
         ],
     },
+    setup_requires=[
+        "setuptools_scm"
+    ],
     install_requires=_load_requires_from_file("requirements.txt"),
     extras_require={
         "ria": ["rgmining-ria"],
