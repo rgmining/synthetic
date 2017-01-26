@@ -16,7 +16,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+# along with rgmining-synthetic-dataset. If not, see <http://www.gnu.org/licenses/>.
 #
 """Package information about a synthetic dataset for review graph mining.
 """
@@ -38,17 +38,28 @@ def _load_requires_from_file(filepath):
 
 setup(
     name='rgmining-synthetic-dataset',
-    version='0.9.2',
+    version='0.9.2-1',
     author="Junpei Kawamoto",
     author_email="kawamoto.junpei@gmail.com",
     description="A synthetic dataset for Review graph mining project",
     url="https://github.com/rgmining/synthetic",
+    py_modules=[
+        "synthetic_evaluation"
+    ],
     packages=find_packages(exclude=["tests"]),
-    package_data={
-        "synthetic": ["*.dat"]
+    include_package_data=True,
+    entry_points={
+        "console_scripts": [
+            "synthetic-evaluation = synthetic_evaluation:main",
+        ],
     },
-    scripts=["bin/synthetic-evaluation"],
     install_requires=_load_requires_from_file("requirements.txt"),
+    extras_require={
+        "ria": ["rgmining-ria"],
+        "rsd": ["rgmining-rds"],
+        "fraud-eagle": ["rgmining-fraud-eagle"],
+        "fraudar": ["rgmining-fraudar"],
+    },
     test_suite='tests.suite',
     license="GPLv3",
     classifiers=[

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 #
-# synthetic-evaluation
+# synthetic_evaluation.py
 #
 # Copyright (c) 2016-2017 Junpei Kawamoto
 #
@@ -17,7 +17,7 @@
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+# along with rgmining-synthetic-dataset. If not, see <http://www.gnu.org/licenses/>.
 #
 """Evaluate a review graph mining algorithm with the synthetic dataset.
 """
@@ -268,7 +268,7 @@ def ranking(
     num_of_type1, num_of_type2, num_of_type3 = calc_anomalous_reviews(
         g.reviewers)
 
-    A1, A2, A3, E = [],[],[], []
+    A1, A2, A3, E = [], [], [], []
     for i in xrange(loop if method != "one" else 1):
         g.update()
 
@@ -365,6 +365,7 @@ def dcg(method, loop, output, param, plot=None):
 def main():
     """The main function.
     """
+    logging.basicConfig(level=logging.INFO, stream=sys.stderr)
     if not ALGORITHMS:
         logging.error("No algorithms are installed.")
         sys.exit(1)
@@ -406,16 +407,16 @@ def main():
             "This option can be set multiply."))
     dcg_cmd.add_argument("--plot", metavar="FILE")
 
-    parser.parse_and_run()
+    try:
+        return parser.parse_and_run()
+    except KeyboardInterrupt:
+        return "Canceled"
+    except Exception as e:  # pylint: disable=broad-except
+        logging.exception("Untracked exception occurred.")
+        return e.message
+    finally:
+        logging.shutdown()
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stderr)
-    try:
-        main()
-    except KeyboardInterrupt:
-        pass
-    except Exception:  # pylint: disable=broad-except
-        logging.exception("Untracked exception occurred.")
-    finally:
-        logging.shutdown()
+    sys.exit(main())
