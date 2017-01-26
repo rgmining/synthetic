@@ -20,10 +20,15 @@
 #
 """Package information about a synthetic dataset for review graph mining.
 """
+from os import path
 from setuptools import setup, find_packages
 
+def read(fname):
+    """Read a file.
+    """
+    return open(path.join(path.dirname(__file__), fname)).read()
 
-def _load_requires_from_file(filepath):
+def load_requires_from_file(filepath):
     """Read a package list from a given file path.
 
     Args:
@@ -42,6 +47,7 @@ setup(
     author="Junpei Kawamoto",
     author_email="kawamoto.junpei@gmail.com",
     description="A synthetic dataset for Review graph mining project",
+    long_description=read("README.rst"),
     url="https://github.com/rgmining/synthetic",
     py_modules=[
         "synthetic_evaluation"
@@ -56,7 +62,7 @@ setup(
     setup_requires=[
         "setuptools_scm"
     ],
-    install_requires=_load_requires_from_file("requirements.txt"),
+    install_requires=load_requires_from_file("requirements.txt"),
     extras_require={
         "ria": ["rgmining-ria"],
         "rsd": ["rgmining-rds"],
