@@ -65,7 +65,7 @@ author = u'Junpei Kawamoto'
 # built documents.
 #
 # The full version, including alpha/beta/rc tags.
-release = u'0.9.2'
+release = u'0.9.3'
 # The short X.Y version.
 version = release[:3]
 

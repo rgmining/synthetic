@@ -72,9 +72,9 @@ License
    :target: https://app.wercker.com/project/byKey/41b8ce3d4b5522780908f816eae1a63d
 .. |Code Climate| image:: https://codeclimate.com/github/rgmining/synthetic/badges/gpa.svg
    :target: https://codeclimate.com/github/rgmining/synthetic
-.. |Release| image:: https://img.shields.io/badge/release-0.9.2-brightgreen.svg
-   :target: https://github.com/rgmining/synthetic/releases/tag/v0.9.2
-.. |PyPi| image:: https://img.shields.io/badge/pypi-0.9.2-brightgreen.svg
+.. |Release| image:: https://img.shields.io/badge/release-0.9.3-brightgreen.svg
+   :target: https://github.com/rgmining/synthetic/releases/tag/v0.9.3
+.. |PyPi| image:: https://img.shields.io/badge/pypi-0.9.3-brightgreen.svg
    :target: https://pypi.python.org/pypi/rgmining-synthetic-dataset
 .. |Japanese| image:: https://img.shields.io/badge/qiita-%E6%97%A5%E6%9C%AC%E8%AA%9E-brightgreen.svg
    :target: http://qiita.com/jkawamoto/items/9a7647c47998fab4a1ad

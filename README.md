@@ -3,8 +3,8 @@
 [![Build Status](https://travis-ci.org/rgmining/synthetic.svg?branch=master)](https://travis-ci.org/rgmining/synthetic)
 [![wercker status](https://app.wercker.com/status/41b8ce3d4b5522780908f816eae1a63d/s/master "wercker status")](https://app.wercker.com/project/byKey/41b8ce3d4b5522780908f816eae1a63d)
 [![Code Climate](https://codeclimate.com/github/rgmining/synthetic/badges/gpa.svg)](https://codeclimate.com/github/rgmining/synthetic)
-[![Release](https://img.shields.io/badge/release-0.9.2-brightgreen.svg)](https://github.com/rgmining/synthetic/releases/tag/v0.9.2)
-[![PyPi](https://img.shields.io/badge/pypi-0.9.2-brightgreen.svg)](https://pypi.python.org/pypi/rgmining-synthetic-dataset)
+[![Release](https://img.shields.io/badge/release-0.9.3-brightgreen.svg)](https://github.com/rgmining/synthetic/releases/tag/v0.9.3)
+[![PyPi](https://img.shields.io/badge/pypi-0.9.3-brightgreen.svg)](https://pypi.python.org/pypi/rgmining-synthetic-dataset)
 [![Japanese](https://img.shields.io/badge/qiita-%E6%97%A5%E6%9C%AC%E8%AA%9E-brightgreen.svg)](http://qiita.com/jkawamoto/items/9a7647c47998fab4a1ad)
 
 [![Logo](https://rgmining.github.io/synthetic/_static/image.png)](https://rgmining.github.io/synthetic/)
