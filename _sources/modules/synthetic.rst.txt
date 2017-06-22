@@ -9,8 +9,8 @@ synthetic package
 Submodules
 ----------
 
-synthetic.loader module
------------------------
+synthetic\.loader module
+------------------------
 
 .. automodule:: synthetic.loader
     :members:
