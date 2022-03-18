@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "rgmining-synthetic-dataset"
+version = "0.9.3"
+description = "A synthetic dataset for Review graph mining project"
+license = "GPL-3.0-only"
+authors = ["Junpei Kawamoto <kawamoto.junpei@gmail.com>"]
+readme = "README.rst"
+homepage = "https://rgmining.github.io/synthetic/"
+repository = "https://github.com/rgmining/synthetic"
+documentation = "https://rgmining.github.io/synthetic/"
+keywords = ["review", "graph", "mining", "dataset", "dexa"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Scientific/Engineering :: Information Analysis"
+]
+packages = [
+    { include = "synthetic" },
+]
+include = ["COPYING"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+matplotlib = "^3.5.1"
+
+[tool.poetry.dev-dependencies]
+bump2version = "^1.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
