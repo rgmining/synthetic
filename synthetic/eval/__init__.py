@@ -1,5 +1,5 @@
 #
-#  test_synthetic.py
+#  __init__.py
 #
 #  Copyright (c) 2016-2022 Junpei Kawamoto
 #
@@ -18,20 +18,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with rgmining-synthetic-dataset. If not, see <http://www.gnu.org/licenses/>.
 #
-"""Unit test for synthetic package.
-"""
-import synthetic
-from tests.graph import Graph
+from typing import Final
 
+from synthetic.eval.score import AnomalousReviews, Reviewer, calc_anomalous_reviews, dcg, ideal_dcg
 
-def test_load() -> None:
-    """Test load method."""
-    graph = Graph()
-    assert synthetic.load(graph) == graph
-
-    anomalous = len([r for r in graph.reviewers if "anomaly" in r.name])
-    assert anomalous == synthetic.ANOMALOUS_REVIEWER_SIZE
-
-    for pmap in graph.reviews.values():
-        for score in pmap.values():
-            assert 0 <= score < 1
+__all__: Final = ("dcg", "ideal_dcg", "calc_anomalous_reviews", "Reviewer", "AnomalousReviews")

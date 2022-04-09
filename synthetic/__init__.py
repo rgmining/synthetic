@@ -49,11 +49,11 @@ reviewers, products, and reviews to the graph.
 """
 from typing import Final
 
+from synthetic.__version__ import __version__
 from synthetic.loader import load
 
 ANOMALOUS_REVIEWER_SIZE: Final = 57
 """The number of anomalous reviewers in this synthetic dataset. """
 
-__version__: Final = "0.9.3"
 
 __all__: Final = ("load", "ANOMALOUS_REVIEWER_SIZE", "__version__")

@@ -23,9 +23,14 @@ packages = [
 ]
 include = ["COPYING"]
 
+[tool.poetry.scripts]
+rgmining-synthetic-dataset = "synthetic.eval.cli:main"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 matplotlib = "^3.5.1"
+numpy = "^1.22.3"
+click = "^8.0.4"
 
 [tool.poetry.dev-dependencies]
 bump2version = "^1.0.1"
@@ -35,7 +40,8 @@ flake8 = "^4.0.1"
 black = "^22.1.0"
 pytest = "^7.1.1"
 pytest-cov = "^3.0.0"
-mypy = "^0.941"
+mypy = "^0.942"
+pytest-mock = "^3.7.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -55,6 +61,26 @@ files = "synthetic/**/*.py,tests/**/*.py"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "matplotlib"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "ria"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "rsd"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "fraud_eagle"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "fraudar"
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 addopts = "--cov='synthetic' --cov-branch"

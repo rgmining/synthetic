@@ -29,7 +29,7 @@ def test_new_reviewer() -> None:
     """If create same reviewers, mock should rise an error."""
     graph = Graph()
     name = "test-reviewer"
-    assert graph.new_reviewer(name) == name
+    assert graph.new_reviewer(name).name == name
     with pytest.raises(ValueError):
         graph.new_reviewer(name)
 
@@ -46,16 +46,9 @@ def test_new_product() -> None:
 def test_add_review() -> None:
     """Test add_review method."""
     graph = Graph()
-    reviewer = "test-reviewer"
-    product = "test-product"
-    graph.new_reviewer(reviewer)
-    graph.new_product(product)
+    reviewer = graph.new_reviewer("test-reviewer")
+    product = graph.new_product("test-product")
 
     score = random()
     graph.add_review(reviewer, product, score)
     assert graph.reviews[reviewer][product] == score
-
-    with pytest.raises(ValueError):
-        graph.add_review(reviewer, reviewer, score)
-    with pytest.raises(ValueError):
-        graph.add_review(product, product, score)

@@ -19,28 +19,39 @@
 #  along with rgmining-synthetic-dataset. If not, see <http://www.gnu.org/licenses/>.
 #
 from collections import defaultdict
+from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
+
+
+@dataclass
+class Reviewer:
+    name: str
+    anomalous_score: float = 0.0
+
+    def __hash__(self) -> int:
+        return hash(self.name)
 
 
 class Graph:
     """A mock object of graph object."""
 
-    reviewers: set[str]
+    reviewers: set[Reviewer]
     products: set[str]
-    reviews: defaultdict[str, dict[str, float]]
+    reviews: defaultdict[Reviewer, dict[str, float]]
 
     def __init__(self) -> None:
         self.reviewers = set()
         self.products = set()
         self.reviews = defaultdict(dict)
 
-    def new_reviewer(self, name: str) -> str:
+    def new_reviewer(self, name: str) -> Reviewer:
         """Create a new reviewer."""
-        if name in self.reviewers:
+        r = Reviewer(name)
+        if r in self.reviewers:
             raise ValueError(f"{name} already exists")
-        self.reviewers.add(name)
-        return name
+        self.reviewers.add(r)
+        return r
 
     def new_product(self, name: str) -> str:
         """Create a new product."""
@@ -49,7 +60,7 @@ class Graph:
         self.products.add(name)
         return name
 
-    def add_review(self, reviewer: str, product: str, score: float, _date: Optional[datetime] = None) -> None:
+    def add_review(self, reviewer: Reviewer, product: str, score: float, _date: Optional[datetime] = None) -> None:
         """Add a review."""
         if reviewer not in self.reviewers:
             raise ValueError(f"{reviewer} doesn't exist")
