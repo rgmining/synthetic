@@ -1,5 +1,5 @@
 #
-#  __init__.py
+#  __main__.py
 #
 #  Copyright (c) 2016-2022 Junpei Kawamoto
 #
@@ -18,3 +18,6 @@
 #  You should have received a copy of the GNU General Public License
 #  along with rgmining-synthetic-dataset. If not, see <http://www.gnu.org/licenses/>.
 #
+from synthetic.eval.cli import main
+
+main()

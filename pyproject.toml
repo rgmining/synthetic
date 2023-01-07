@@ -1,0 +1,86 @@
+[tool.poetry]
+name = "rgmining-synthetic-dataset"
+version = "0.9.3"
+description = "A synthetic dataset for Review graph mining project"
+license = "GPL-3.0-only"
+authors = ["Junpei Kawamoto <kawamoto.junpei@gmail.com>"]
+readme = "README.rst"
+homepage = "https://rgmining.github.io/synthetic/"
+repository = "https://github.com/rgmining/synthetic"
+documentation = "https://rgmining.github.io/synthetic/"
+keywords = ["review", "graph", "mining", "dataset", "dexa"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Natural Language :: English",
+    "Programming Language :: Python",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Scientific/Engineering :: Information Analysis"
+]
+packages = [
+    { include = "synthetic" },
+]
+include = ["COPYING"]
+
+[tool.poetry.scripts]
+rgmining-synthetic-dataset = "synthetic.eval.cli:main"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+matplotlib = "^3.5.1"
+numpy = "^1.22.3"
+click = "^8.0.4"
+
+[tool.poetry.group.dev.dependencies]
+bump2version = "^1.0.1"
+pre-commit = "^2.17.0"
+isort = "^5.10.1"
+flake8 = "^6.0.0"
+black = "^22.1.0"
+pytest = "^7.1.1"
+pytest-cov = "^4.0.0"
+mypy = "^0.991"
+pytest-mock = "^3.7.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+target-version = ['py39']
+line-length = 120
+
+[tool.isort]
+profile = "black"
+line_length = 120
+src_paths = ["synthetic", "tests"]
+
+[tool.mypy]
+files = "synthetic/**/*.py,tests/**/*.py"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "matplotlib"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "ria"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "rsd"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "fraud_eagle"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "fraudar"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+addopts = "--cov='synthetic' --cov-branch"
