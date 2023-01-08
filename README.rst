@@ -1,13 +1,7 @@
 A Synthetic Review Dataset
 ==========================
 
-| |GPLv3|
-| |Build Status|
-| |wercker status|
-| |Code Climate|
-| |Release|
-| |PyPi|
-| |Japanese|
+|GPLv3| |Build Status| |Maintainability| |Test Coverage| |PyPi| |Japanese|
 
 |Logo|
 
@@ -17,7 +11,7 @@ The synthetic review dataset has been introduced in the following paper:
 
 -  Kazuki Tawaramoto, `Junpei Kawamoto <https://www.jkawamoto.info>`__,
    `Yasuhito
-   Asano <http://www.iedu.i.kyoto-u.ac.jp/intro/member/asano>`__, and
+   Asano <http://ris.toyo.ac.jp/profile/en.d83b3a53c4e08dc39c5613ee8954ad37.html>`__, and
    `Masatoshi
    Yoshikawa <http://www.db.soc.i.kyoto-u.ac.jp/~yoshikawa/>`__,
    "`A Bipartite Graph Model and Mutually Reinforcing Analysis for
@@ -41,9 +35,8 @@ Use ``pip`` to install this package.
 Usage
 -----
 
-| This package provides ``load`` method which takes a graph object and
-  adds
-| reviewers, products and reviews to the graph.
+This package provides ``load`` method which takes a graph object and
+adds reviewers, products and reviews to the graph.
 
 .. code:: py
 
@@ -51,29 +44,24 @@ Usage
     import synthetic
     synthetic.load(graph)
 
-| This package also provides an executable script,
-  ``synthetic-evaluation``.
-| See the
-  `document <https://rgmining.github.io/synthetic/scripts.html>`__
-| for more information.
+This package also provides an executable script, ``rgmining-synthetic-dataset``.
+See the `document <https://rgmining.github.io/synthetic/scripts.html>`__
+for more information.
 
 License
 -------
 
-| This software is released under The GNU General Public License Version
-  3,
-| see `COPYING <COPYING>`__ for more detail.
+This software is released under The GNU General Public License Version 3,
+see `COPYING <COPYING>`__ for more detail.
 
 .. |GPLv3| image:: https://img.shields.io/badge/license-GPLv3-blue.svg
    :target: https://www.gnu.org/copyleft/gpl.html
-.. |Build Status| image:: https://travis-ci.org/rgmining/synthetic.svg?branch=master
-   :target: https://travis-ci.org/rgmining/synthetic
-.. |wercker status| image:: https://app.wercker.com/status/41b8ce3d4b5522780908f816eae1a63d/s/master
-   :target: https://app.wercker.com/project/byKey/41b8ce3d4b5522780908f816eae1a63d
-.. |Code Climate| image:: https://codeclimate.com/github/rgmining/synthetic/badges/gpa.svg
-   :target: https://codeclimate.com/github/rgmining/synthetic
-.. |Release| image:: https://img.shields.io/badge/release-0.9.3-brightgreen.svg
-   :target: https://github.com/rgmining/synthetic/releases/tag/v0.9.3
+.. |Build Status| image:: https://github.com/rgmining/synthetic/actions/workflows/python-lib.yaml/badge.svg
+   :target: https://github.com/rgmining/synthetic/actions/workflows/python-lib.yaml
+.. |Maintainability| image:: https://api.codeclimate.com/v1/badges/6e956b0cf348d6a23c19/maintainability
+   :target: https://codeclimate.com/github/rgmining/synthetic/maintainability
+.. |Test Coverage| image:: https://api.codeclimate.com/v1/badges/6e956b0cf348d6a23c19/test_coverage
+   :target: https://codeclimate.com/github/rgmining/synthetic/test_coverage
 .. |PyPi| image:: https://img.shields.io/badge/pypi-0.9.3-brightgreen.svg
    :target: https://pypi.python.org/pypi/rgmining-synthetic-dataset
 .. |Japanese| image:: https://img.shields.io/badge/qiita-%E6%97%A5%E6%9C%AC%E8%AA%9E-brightgreen.svg
