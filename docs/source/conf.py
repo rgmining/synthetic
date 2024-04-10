@@ -57,7 +57,7 @@ master_doc = "index"
 
 # General information about the project.
 project = "Synthetic Review Dataset"
-copyright = "2016-2017, Junpei Kawamoto"
+copyright = "2016-2024, Junpei Kawamoto"
 author = "Junpei Kawamoto"
 
 # The version info for the project you're documenting, acts as replacement for
