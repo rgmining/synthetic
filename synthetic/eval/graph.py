@@ -1,7 +1,7 @@
 #
 #  graph.py
 #
-#  Copyright (c) 2016-2022 Junpei Kawamoto
+#  Copyright (c) 2016-2024 Junpei Kawamoto
 #
 #  This file is part of rgmining-synthetic-dataset.
 #
@@ -34,8 +34,7 @@ class Graph(_Graph):
 
     reviewers: Collection[Reviewer]
 
-    def update(self) -> Any:
-        ...
+    def update(self) -> Any: ...
 
 
 GraphConstructor = Callable[..., Graph]
