@@ -12,36 +12,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install poetry
         run: pipx install poetry
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.9"
           cache: poetry
       - name: Install dependencies
         run: poetry install
-      - uses: actions/cache@v3
+      - uses: actions/cache@v4
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
       - name: Check files
         run: poetry run pre-commit run --all-files
       - name: Report test coverage to Code Climate
-        uses: paambaati/codeclimate-action@v3.2.0
+        uses: paambaati/codeclimate-action@v5.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageLocations: coverage.xml:coverage.py
-      - name: Build and release to PyPi
+      - name: Build and release
         run: |
           poetry config pypi-token.pypi ${{ secrets.PYPI_API_TOKEN }}
           poetry publish --build
-        if: startsWith(github.ref, 'refs/tags/')
-      - name: Release to GitHub
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            dist/*
         if: startsWith(github.ref, 'refs/tags/')
