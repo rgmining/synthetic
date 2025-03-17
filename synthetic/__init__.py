@@ -1,7 +1,7 @@
 #
 #  __init__.py
 #
-#  Copyright (c) 2016-2022 Junpei Kawamoto
+#  Copyright (c) 2016-2025 Junpei Kawamoto
 #
 #  This file is part of rgmining-synthetic-dataset.
 #
@@ -47,6 +47,7 @@ reviewers, products, and reviews to the graph.
 .. _Masatoshi Yoshikawa: http://www.db.soc.i.kyoto-u.ac.jp/~yoshikawa/
 
 """
+
 from typing import Final
 
 from synthetic.__version__ import __version__
