@@ -1,24 +1,32 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-merge-conflict
       - id: check-yaml
       - id: check-toml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+  - repo: https://github.com/google/yamlfmt
+    rev: v0.16.0
+    hooks:
+      - id: yamlfmt
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.10.0
+    rev: v0.11.0
     hooks:
       - id: ruff
-        args: [ --fix ]
+        args: [--fix]
       - id: ruff-format
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: v2.5.1
+    hooks:
+      - id: pyproject-fmt
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.15.0
     hooks:
       - id: mypy
-        args: [ ]
-        additional_dependencies: [ "click>=8.1",  "matplotlib>=3.10",  "numpy>=2.2" , "pytest>=8.1.1", "pytest-mock>=3.7.0" ]
+        args: []
+        additional_dependencies: ["click>=8.1", "matplotlib>=3.10", "numpy>=2.2", "pytest>=8.1.1", "pytest-mock>=3.7.0"]
   - repo: local
     hooks:
       - id: pytest
