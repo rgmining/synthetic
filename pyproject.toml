@@ -29,24 +29,26 @@ classifiers = [
   "Topic :: Scientific/Engineering :: Information Analysis",
   "Topic :: Software Development :: Libraries",
 ]
+
 dependencies = [
   "click>=8.1",
   "matplotlib>=3.10",
   "numpy>=2.2",
 ]
 
+urls.documentation = "https://rgmining.github.io/synthetic/"
+urls.homepage = "https://rgmining.github.io/synthetic/"
+urls.repository = "https://github.com/rgmining/synthetic"
 scripts.rgmining-synthetic-dataset = "synthetic.eval.cli:main"
 
-homepage = "https://rgmining.github.io/synthetic/"
-repository = "https://github.com/rgmining/synthetic"
-documentation = "https://rgmining.github.io/synthetic/"
+[tool.poetry]
 packages = [
   { include = "synthetic" },
 ]
 include = [ "COPYING" ]
 
 [tool.poetry.group.dev.dependencies]
-bump2version = "^1.0.1"
+bump-my-version = "^1.0.2"
 pre-commit = "^4.1"
 pre-commit-uv = "^4.1.4"
 pytest = "^8.1.1"
@@ -72,6 +74,28 @@ addopts = "--cov=synthetic --cov-branch --cov-report=term-missing --cov-report=x
 
 [tool.coverage.report]
 exclude_lines = [ "\\.{3}" ]
+
+[tool.bumpversion]
+current_version = "0.9.3"
+commit = true
+pre_commit_hooks = [
+  "poetry lock",
+  "git add poetry.lock",
+]
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search = 'version = "{current_version}"'
+replace = 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "synthetic/__version__.py"
+
+[[tool.bumpversion.files]]
+filename = "README.rst"
+
+[[tool.bumpversion.files]]
+filename = "docs/source/conf.py"
 
 [tool.mypy]
 files = "synthetic/**/*.py,tests/**/*.py"
