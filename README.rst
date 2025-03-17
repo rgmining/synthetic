@@ -62,7 +62,7 @@ see `COPYING <COPYING>`__ for more detail.
    :target: https://codeclimate.com/github/rgmining/synthetic/maintainability
 .. |Test Coverage| image:: https://api.codeclimate.com/v1/badges/6e956b0cf348d6a23c19/test_coverage
    :target: https://codeclimate.com/github/rgmining/synthetic/test_coverage
-.. |PyPi| image:: https://img.shields.io/badge/pypi-0.9.3-brightgreen.svg
+.. |PyPi| image:: https://img.shields.io/badge/pypi-0.9.4-brightgreen.svg
    :target: https://pypi.python.org/pypi/rgmining-synthetic-dataset
 .. |Japanese| image:: https://img.shields.io/badge/qiita-%E6%97%A5%E6%9C%AC%E8%AA%9E-brightgreen.svg
    :target: http://qiita.com/jkawamoto/items/9a7647c47998fab4a1ad
