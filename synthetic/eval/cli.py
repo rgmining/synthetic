@@ -137,7 +137,7 @@ def threshold(
         pyplot.ylabel("True positive rate")
         pyplot.xlim(0, 1)
         pyplot.ylim(0, 1)
-        pyplot.title("AUC: {0}".format(-round(np.trapz(y, x), 5)))
+        pyplot.title("AUC: {0}".format(-round(np.trapezoid(y, x), 5)))
         pyplot.tight_layout()
         pyplot.savefig(plot)
 

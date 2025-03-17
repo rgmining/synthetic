@@ -1,44 +1,54 @@
-[tool.poetry]
+[build-system]
+build-backend = "poetry.core.masonry.api"
+
+requires = [ "poetry-core>=2" ]
+
+[project]
 name = "rgmining-synthetic-dataset"
 version = "0.9.3"
 description = "A synthetic dataset for Review graph mining project"
-license = "GPL-3.0-only"
-authors = ["Junpei Kawamoto <kawamoto.junpei@gmail.com>"]
 readme = "README.rst"
+keywords = [ "dataset", "dexa", "graph", "mining", "review" ]
+license = "GPL-3.0-only"
+authors = [
+  { name = "Junpei Kawamoto", email = "kawamoto.junpei@gmail.com" },
+]
+requires-python = ">=3.10"
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Natural Language :: English",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+  "click>=8.1",
+  "matplotlib>=3.10",
+  "numpy>=2.2",
+]
+
+scripts.rgmining-synthetic-dataset = "synthetic.eval.cli:main"
+
 homepage = "https://rgmining.github.io/synthetic/"
 repository = "https://github.com/rgmining/synthetic"
 documentation = "https://rgmining.github.io/synthetic/"
-keywords = ["review", "graph", "mining", "dataset", "dexa"]
-classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Natural Language :: English",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Topic :: Software Development :: Libraries",
-    "Topic :: Scientific/Engineering :: Information Analysis"
-]
 packages = [
-    { include = "synthetic" },
+  { include = "synthetic" },
 ]
-include = ["COPYING"]
-
-[tool.poetry.scripts]
-rgmining-synthetic-dataset = "synthetic.eval.cli:main"
-
-[tool.poetry.dependencies]
-python = "^3.9"
-matplotlib = "^3.5.1"
-numpy = "^1.22.3"
-click = "^8.0.4"
+include = [ "COPYING" ]
 
 [tool.poetry.group.dev.dependencies]
 bump2version = "^1.0.1"
-pre-commit = "^3.7.0"
+pre-commit = "^4.1"
+pre-commit-uv = "^4.1.4"
 isort = "^5.10.1"
 flake8 = "^7.0.0"
 black = "^24.3.0"
@@ -56,18 +66,20 @@ sphinx = "^7.2.6"
 sphinx-rtd-theme = "^2.0.0"
 sphinx-autobuild = "^2024.2.4"
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.black]
-target-version = ['py39']
+target-version = [ 'py39' ]
 line-length = 120
 
 [tool.isort]
 profile = "black"
 line_length = 120
-src_paths = ["synthetic", "tests"]
+src_paths = [ "synthetic", "tests" ]
+
+[tool.pytest.ini_options]
+addopts = "--cov=synthetic --cov-branch --cov-report=term-missing --cov-report=xml"
+
+[tool.coverage.report]
+exclude_lines = [ "\\.{3}" ]
 
 [tool.mypy]
 files = "synthetic/**/*.py,tests/**/*.py"
@@ -76,27 +88,10 @@ warn_unused_configs = true
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
-module = "matplotlib"
+module = [
+  "ria",
+  "rsd",
+  "fraud_eagle",
+  "fraudar",
+]
 ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "ria"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "rsd"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "fraud_eagle"
-ignore_missing_imports = true
-
-[[tool.mypy.overrides]]
-module = "fraudar"
-ignore_missing_imports = true
-
-[tool.pytest.ini_options]
-addopts = "--cov=synthetic --cov-branch --cov-report=term-missing --cov-report=xml"
-
-[tool.coverage.report]
-exclude_lines = ["\\.{3}"]
