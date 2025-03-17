@@ -1,7 +1,7 @@
 #
 #  cli.py
 #
-#  Copyright (c) 2016-2022 Junpei Kawamoto
+#  Copyright (c) 2016-2025 Junpei Kawamoto
 #
 #  This file is part of rgmining-synthetic-dataset.
 #
@@ -18,8 +18,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with rgmining-synthetic-dataset. If not, see <http://www.gnu.org/licenses/>.
 #
-"""This module defines a CLI command that evaluates a review graph algorithm with the synthetic dataset.
-"""
+"""This module defines a CLI command that evaluates a review graph algorithm with the synthetic dataset."""
+
 import json
 import logging
 import sys
@@ -137,7 +137,7 @@ def threshold(
         pyplot.ylabel("True positive rate")
         pyplot.xlim(0, 1)
         pyplot.ylim(0, 1)
-        pyplot.title("AUC: {0}".format(-round(np.trapz(y, x), 5)))
+        pyplot.title("AUC: {0}".format(-round(np.trapezoid(y, x), 5)))
         pyplot.tight_layout()
         pyplot.savefig(plot)
 

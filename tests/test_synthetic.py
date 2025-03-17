@@ -1,7 +1,7 @@
 #
 #  test_synthetic.py
 #
-#  Copyright (c) 2016-2022 Junpei Kawamoto
+#  Copyright (c) 2016-2025 Junpei Kawamoto
 #
 #  This file is part of rgmining-synthetic-dataset.
 #
@@ -18,8 +18,8 @@
 #  You should have received a copy of the GNU General Public License
 #  along with rgmining-synthetic-dataset. If not, see <http://www.gnu.org/licenses/>.
 #
-"""Unit test for synthetic package.
-"""
+"""Unit test for synthetic package."""
+
 import synthetic
 from tests.graph import Graph
 
