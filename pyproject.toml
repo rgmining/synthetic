@@ -88,13 +88,7 @@ search = 'version = "{current_version}"'
 replace = 'version = "{new_version}"'
 
 [[tool.bumpversion.files]]
-filename = "synthetic/__version__.py"
-
-[[tool.bumpversion.files]]
 filename = "README.rst"
-
-[[tool.bumpversion.files]]
-filename = "docs/source/conf.py"
 
 [tool.mypy]
 files = "synthetic/**/*.py,tests/**/*.py"
