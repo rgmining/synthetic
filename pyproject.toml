@@ -13,7 +13,7 @@ license = "GPL-3.0-only"
 authors = [
   { name = "Junpei Kawamoto", email = "kawamoto.junpei@gmail.com" },
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 
 classifiers = [
   "Development Status :: 4 - Beta",
@@ -22,7 +22,6 @@ classifiers = [
   "Natural Language :: English",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -61,12 +60,12 @@ ruff = "^0.11.0"
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-sphinx = "^7.2.6"
-sphinx-rtd-theme = "^2.0.0"
-sphinx-autobuild = "^2024.2.4"
+sphinx = "^8.2.3"
+sphinx-rtd-theme = "^3.0.2"
+sphinx-autobuild = "^2024.10.3"
 
 [tool.ruff]
-target-version = "py310"
+target-version = "py311"
 line-length = 120
 
 [tool.pytest.ini_options]
@@ -89,13 +88,7 @@ search = 'version = "{current_version}"'
 replace = 'version = "{new_version}"'
 
 [[tool.bumpversion.files]]
-filename = "synthetic/__version__.py"
-
-[[tool.bumpversion.files]]
 filename = "README.rst"
-
-[[tool.bumpversion.files]]
-filename = "docs/source/conf.py"
 
 [tool.mypy]
 files = "synthetic/**/*.py,tests/**/*.py"

@@ -24,6 +24,7 @@ import json
 import logging
 import sys
 from typing import BinaryIO, Final, Optional, TextIO
+from importlib.metadata import version
 
 import click
 import numpy as np
@@ -56,7 +57,7 @@ def load_graph(method: str, params: list[tuple[str, str]]) -> Graph:
 
 
 @click.group()
-@click.version_option(click.__version__)
+@click.version_option(version("rgmining-synthetic-dataset"))
 def main() -> None:
     """Evaluate a review graph mining algorithm with the synthetic dataset."""
     if not INSTALLED_GRAPHS:
